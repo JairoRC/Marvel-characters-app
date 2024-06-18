@@ -131,6 +131,11 @@
   padding-bottom: 0.75rem;
 }
 
+.comic-thumbnail {
+  width: auto;
+  height: auto;
+}
+
 /* TABLET */
 
 @media (max-width: 1024px) {

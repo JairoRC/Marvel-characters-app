@@ -17,6 +17,7 @@ export default function HeroeDetailsPage({ params }: Props) {
   const [heroe, setHeroe] = useState<SimpleHeroe | null>(null);
   const [comics, setComics] = useState<ComicsDetails[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const { favorites, addFavorite, removeFavorite } = useHeroes();
 
   const isFavorite = favorites.some(
@@ -35,6 +36,7 @@ export default function HeroeDetailsPage({ params }: Props) {
     };
     const fetchComicDetails = async () => {
       try {
+        setLoading(true);
         const fetchedComic = await getComicDetails(params.id);
         fetchedComic.forEach((comic) => {
           const date = comic.dates.date;
@@ -42,9 +44,11 @@ export default function HeroeDetailsPage({ params }: Props) {
           comic.dates.date = year.toString();
         });
         setComics(fetchedComic);
+        setLoading(false);
         console.log(fetchedComic, "Comic2");
       } catch (error) {
         setError("Failed to fetch hero details.");
+        setLoading(false);
         console.error(error);
       }
     };
@@ -70,6 +74,7 @@ export default function HeroeDetailsPage({ params }: Props) {
               alt={heroe.name}
               width={300}
               height={300}
+              priority={true}
               className={style["hero-image"]}
             />
             <div className={style["hero-info"]}>
@@ -126,8 +131,8 @@ export default function HeroeDetailsPage({ params }: Props) {
                         src={
                           comic.thumbnail.path + "." + comic.thumbnail.extension
                         }
-                        width={150}
-                        height={150}
+                        width={120}
+                        height={120}
                         alt={comic.title}
                         priority={true}
                         className={style["comic-thumbnail"]}
@@ -141,9 +146,13 @@ export default function HeroeDetailsPage({ params }: Props) {
                 ))
               ) : (
                 <>
-                  <div className={style["comic-title"]}>
-                    SIN COMICS DISPONIBLES
-                  </div>
+                  {loading ? (
+                    <div className={style["comic-title"]}>CARGANDO...</div>
+                  ) : (
+                    <div className={style["comic-title"]}>
+                      SIN COMICS DISPONIBLES
+                    </div>
+                  )}
                 </>
               )}
             </ul>
