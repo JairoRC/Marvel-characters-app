@@ -40,7 +40,6 @@ export const HeroesProvider = ({ children }: HeroesProviderProps) => {
     if (savedFavorites) {
       try {
         const parsedFavorites = JSON.parse(savedFavorites);
-        console.log("Loaded favorites from localStorage:", parsedFavorites);
         setFavorites(parsedFavorites);
       } catch (error) {
         console.error("Failed to parse favorites from localStorage", error);
