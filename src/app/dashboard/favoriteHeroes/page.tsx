@@ -9,7 +9,6 @@ export default function FavoritesHeroesPage() {
   const favorites = useHeroes()?.favorites ?? undefined;
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredHeroes, setFilteredHeroes] = useState<SimpleHeroe[]>([]);
-  console.log(favorites, "Fav");
 
   useEffect(() => {
     if (favorites) {

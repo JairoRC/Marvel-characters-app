@@ -45,7 +45,6 @@ export default function HeroeDetailsPage({ params }: Props) {
         });
         setComics(fetchedComic);
         setLoading(false);
-        console.log(fetchedComic, "Comic2");
       } catch (error) {
         setError("Failed to fetch hero details.");
         setLoading(false);
