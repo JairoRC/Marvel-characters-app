@@ -41,12 +41,15 @@ export const HeroesProvider = ({ children }: HeroesProviderProps) => {
       try {
         const parsedFavorites = JSON.parse(savedFavorites);
         setFavorites(parsedFavorites);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Failed to parse favorites from localStorage", error);
+      }
     }
   }, []);
 
   useEffect(() => {
     if (favorites.length > 0) {
+      console.log("Saving favorites to localStorage:", favorites);
       localStorage.setItem("favorites", JSON.stringify(favorites));
     } else {
       localStorage.removeItem("favorites");
