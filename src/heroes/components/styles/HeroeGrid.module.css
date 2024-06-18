@@ -1,0 +1,26 @@
+.heroe-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.55rem;
+  margin-left: 2rem;
+}
+
+@media (max-width: 1366px) {
+  .heroe-grid {
+    gap: 1.45rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .heroe-grid {
+    gap: 3.33rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .heroe-grid {
+    gap: 0.55rem;
+    margin-left: 0rem;
+    place-content: center;
+  }
+}

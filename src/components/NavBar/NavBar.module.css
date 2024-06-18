@@ -1,0 +1,36 @@
+.navBar-styled {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  width: -webkit-fill-available;
+  color: white;
+  height: 4.5rem;
+  padding: 1rem 2.5rem 1rem 2.5rem;
+  border-bottom: 1px solid grey;
+}
+
+.likeLink-styled {
+  display: ruby;
+  padding-top: 0.25rem;
+}
+
+.marvel-icon {
+  width: auto;
+  height: auto;
+}
+
+.like-icon {
+  width: auto;
+  height: auto;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .navBar-styled {
+    height: 5.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+}
