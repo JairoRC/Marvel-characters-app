@@ -1,0 +1,14 @@
+.layout-styled {
+  height: -webkit-fill-available;
+  background-color: white;
+  color: rgb(203 213 225 / var(--tw-text-opacity));
+}
+
+.layout-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.layout-children {
+  width: 100%;
+}

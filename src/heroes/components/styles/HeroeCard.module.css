@@ -1,0 +1,56 @@
+.heroe-card {
+  position: relative;
+  background-color: black;
+  color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.heroe-card-content {
+  padding: 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.heroe-card-name {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.heroe-card-like {
+  position: absolute;
+  bottom: 1.3rem;
+  right: 1rem;
+}
+
+.heroe-card-like:hover {
+  cursor: pointer;
+}
+
+.like-icon {
+  width: auto;
+  height: auto;
+}
+
+.dislike-icon {
+  width: auto;
+  height: auto;
+}
+
+.corner-cut {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 15px 0 0;
+  border-color: transparent white transparent transparent;
+}
+
+.divider {
+  background-color: red;
+  width: 12rem;
+  height: 0.3rem;
+}

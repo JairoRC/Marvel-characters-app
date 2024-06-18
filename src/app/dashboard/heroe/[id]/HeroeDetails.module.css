@@ -1,0 +1,214 @@
+.hero-details-container {
+}
+
+.back-link {
+  text-decoration: none;
+  color: #e62429;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.hero-details {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+}
+
+.hero-image {
+  margin-right: 80px;
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.hero-info {
+  max-width: 500px;
+}
+
+.hero-name {
+  display: flex;
+}
+
+.hero-text {
+  font-family: system-ui;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 46.88px;
+  text-align: left;
+}
+
+.hero-description {
+  margin-top: 2rem;
+  font-family: system-ui;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.75px;
+  text-align: left;
+}
+
+.icon-style {
+  margin-top: 0.8rem;
+  margin-right: 2rem;
+  margin-left: 8rem;
+}
+
+.icon-style img {
+  max-width: none;
+}
+
+.like-icon {
+  width: auto;
+  height: auto;
+}
+
+.dislike-icon {
+  width: auto;
+  height: auto;
+}
+
+.comic-text {
+  margin: 2rem 20rem 2rem 21rem;
+  font-family: system-ui;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 37.5px;
+  text-align: left;
+}
+
+.comic-container {
+  overflow-x: auto;
+  overflow-y: clip;
+  margin: 1rem 18rem 1rem 21rem;
+}
+
+.comic-container::-webkit-scrollbar {
+  width: 1px;
+  height: 8px;
+  background: grey;
+}
+
+.comic-container::-webkit-scrollbar-thumb {
+  width: 1px;
+  background: red;
+}
+
+.comics-list {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+}
+
+.comic-image {
+  margin-right: 8rem;
+  margin-bottom: 0.5rem;
+}
+
+.comic-image img {
+  max-width: none;
+}
+
+.comic-title {
+  width: 50%;
+  font-family: system-ui;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18.75px;
+  text-align: left;
+}
+
+.comic-date {
+  font-family: system-ui;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.06px;
+  text-align: left;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+  .hero-image {
+    margin-right: 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-text {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .comic-text {
+    font-size: 25px;
+    margin: 0.5% 20% 0% 12%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .comic-container {
+    margin: 0% 9% 0% 12%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .comic-date {
+    padding-bottom: 0rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .comic-thumbnail {
+    margin-right: 0rem;
+    margin-bottom: 0rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .comic-text {
+    font-size: 32px;
+    margin: 5% 20% 5% 12%;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 412px) {
+  .hero-details {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 412px) {
+  .hero-image {
+    width: -webkit-fill-available;
+    max-width: none;
+    max-height: none;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 412px) {
+  .hero-info {
+    margin: 0rem 0.5rem 0.5rem 0.5rem;
+  }
+}
+
+@media (max-width: 412px) {
+  .hero-text {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 412px) {
+  .hero-description {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,15 @@
+.favorite-page {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.title {
+  font-family: system-ui;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 37.5px;
+  text-align: left;
+  padding: 1rem 2rem 1rem 2rem;
+}
