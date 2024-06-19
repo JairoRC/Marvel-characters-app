@@ -49,7 +49,6 @@ export const HeroesProvider = ({ children }: HeroesProviderProps) => {
 
   useEffect(() => {
     if (favorites.length > 0) {
-      console.log("Saving favorites to localStorage:", favorites);
       localStorage.setItem("favorites", JSON.stringify(favorites));
     } else {
       localStorage.removeItem("favorites");
