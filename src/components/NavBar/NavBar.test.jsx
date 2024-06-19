@@ -19,7 +19,7 @@ describe("Componente NavBar", () => {
     const likeIcon = screen.getByAltText("like");
     expect(likeIcon).toBeInTheDocument();
 
-    const favoritesCountElement = screen.getByText("0"); // Ajusta este valor según el valor inicial de favoritesCount
+    const favoritesCountElement = screen.getByText("0");
     expect(favoritesCountElement).toBeInTheDocument();
   });
 });
