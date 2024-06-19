@@ -16,6 +16,7 @@ export const NavBar: React.FC = () => {
             width={100}
             height={100}
             src={Logo}
+            priority
             alt="Marvel"
             className={style["marvel-icon"]}
           />

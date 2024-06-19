@@ -40,6 +40,7 @@ export const HeroeCard = ({ heroe }: Props) => {
           width={0}
           height={0}
           alt={heroe.name}
+          priority
           sizes="100dvh"
           className="w-48 h-48"
         />
