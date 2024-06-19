@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: 2.55rem;
   margin-left: 2rem;
+  padding-bottom: 2rem;
 }
 
 @media (max-width: 1366px) {
