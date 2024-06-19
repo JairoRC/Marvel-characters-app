@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { ComicsDetails, SimpleHeroe } from "@/heroes";
 import { Loading } from "@/components";
@@ -23,6 +23,8 @@ export default function HeroeDetailsPage({ params }: Props) {
   const isFavorite = favorites.some(
     (favHeroe: { id: number }) => favHeroe.id == params.id
   );
+
+  const comicContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchHeroDetails = async () => {
@@ -60,6 +62,18 @@ export default function HeroeDetailsPage({ params }: Props) {
       removeFavorite(Number(params.id));
     } else {
       if (heroe) addFavorite(heroe);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (comicContainerRef.current) {
+      comicContainerRef.current.scrollLeft -= 150;
+    }
+  };
+
+  const scrollRight = () => {
+    if (comicContainerRef.current) {
+      comicContainerRef.current.scrollLeft += 150;
     }
   };
 
@@ -117,7 +131,28 @@ export default function HeroeDetailsPage({ params }: Props) {
         )}
       </div>
       <div className={style["comic-text"]}>COMICS</div>
-      <div className={style["comic-container"]}>
+      <div ref={comicContainerRef} className={style["comic-container"]}>
+        <div>
+          <button
+            onClick={scrollLeft}
+            className={`${style["scroll-left-button"]} ${style["scroll-button-web-only"]}`}
+          >
+            <svg
+              className=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:-translate-x-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.5"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
+        </div>
         <div>
           <div>
             <ul className={style["comics-list"]}>
@@ -140,6 +175,27 @@ export default function HeroeDetailsPage({ params }: Props) {
                     <div className={style["comic-title"]}>{comic.title}</div>
                     <div className={style["comic-date"]}>
                       {comic.dates.date}
+                    </div>
+                    <div>
+                      <button
+                        onClick={scrollRight}
+                        className={`${style["scroll-right-button"]} ${style["scroll-button-web-only"]}`}
+                      >
+                        <svg
+                          className=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:translate-x-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.5"
+                            d="M9 5l7 7-7 7"
+                          ></path>
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 ))
