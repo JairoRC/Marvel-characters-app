@@ -15,7 +15,6 @@ describe("Componente HeroeGrid", () => {
       name: "Iron Man",
       thumbnail: { path: "http://example.com/ironman", extension: "jpg" },
     },
-    // Agrega más héroes según sea necesario para tus pruebas
   ];
 
   const Wrapper = ({ children }) => <HeroesProvider>{children}</HeroesProvider>;
@@ -27,11 +26,9 @@ describe("Componente HeroeGrid", () => {
       </Wrapper>
     );
 
-    // Verificar que el componente HeroeGrid se haya renderizado correctamente
     const gridElement = screen.getByTestId("heroe-grid");
     expect(gridElement).toBeInTheDocument();
 
-    // Verificar que cada héroe se renderice correctamente dentro del grid
     mockHeroes.forEach((hero) => {
       const heroNameElement = screen.getByText(hero.name);
       expect(heroNameElement).toBeInTheDocument();

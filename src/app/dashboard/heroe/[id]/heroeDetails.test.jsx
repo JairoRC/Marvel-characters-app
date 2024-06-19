@@ -6,9 +6,7 @@ import {
   getHeroeDetails,
   getComicDetails,
 } from "../../../../services/heroesApi";
-import { Loading } from "../../../../components/Loading/Loading";
 
-// Mock de servicios
 jest.mock("@/services/heroesApi");
 jest.mock("@/context/HeroesContext", () => ({
   useHeroes: jest.fn(),
