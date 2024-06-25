@@ -9,36 +9,25 @@ import style from "./HeroeDetails.module.css";
 import Like from "../../../../../public/like.svg";
 import Dislike from "../../../../../public/dislike.svg";
 
-interface Props {
-  params: { id: number };
+export interface Props {
+  params: { id: string };
 }
 
 export default function HeroeDetailsPage({ params }: Props) {
-  const [heroe, setHeroe] = useState<SimpleHeroe | null>(null);
+  const heroesContext = useHeroes();
+  const [heroe, setHeroe] = useState<SimpleHeroe>(heroesContext.heroesById[params.id]);
+
   const [comics, setComics] = useState<ComicsDetails[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { favorites, addFavorite, removeFavorite } = useHeroes();
+  const { favoritesIds, addFavorite, removeFavorite } = useHeroes();
 
-  const isFavorite = favorites.some(
-    (favHeroe: { id: number }) => favHeroe.id == params.id
-  );
-
+  const isFavorite = favoritesIds.includes(parseInt(params.id, 10));
   const comicContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchHeroDetails = async () => {
-      try {
-        const fetchedHero = await getHeroeDetails(params.id);
-        setHeroe(fetchedHero[0]);
-      } catch (error) {
-        setError("Failed to fetch hero details.");
-        console.error(error);
-      }
-    };
     const fetchComicDetails = async () => {
       try {
-        setLoading(true);
         const fetchedComic = await getComicDetails(params.id);
         fetchedComic.forEach((comic) => {
           const date = comic.dates.date;
@@ -46,14 +35,12 @@ export default function HeroeDetailsPage({ params }: Props) {
           comic.dates.date = year.toString();
         });
         setComics(fetchedComic);
-        setLoading(false);
       } catch (error) {
         setError("Failed to fetch hero details.");
-        setLoading(false);
         console.error(error);
       }
     };
-    fetchHeroDetails();
+
     fetchComicDetails();
   }, [params.id]);
 
@@ -80,55 +67,51 @@ export default function HeroeDetailsPage({ params }: Props) {
   return (
     <div className={style["hero-details-container"]}>
       <div>
-        {heroe ? (
-          <div className={style["hero-details"]}>
-            <Image
-              src={`${heroe.thumbnail.path}.${heroe.thumbnail.extension}`}
-              alt={heroe.name}
-              width={300}
-              height={300}
-              priority={true}
-              className={style["hero-image"]}
-            />
-            <div className={style["hero-info"]}>
-              <div className={style["hero-name"]}>
-                <h1 className={style["hero-text"]}>{heroe.name}</h1>
-                {isFavorite ? (
-                  <div
-                    className={style["icon-style"]}
-                    onClick={handleFavoriteClick}
-                  >
-                    <Image
-                      key={1}
-                      src={Like}
-                      width={24}
-                      height={22}
-                      alt="like"
-                      className={style["like-icon"]}
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className={style["icon-style"]}
-                    onClick={handleFavoriteClick}
-                  >
-                    <Image
-                      key={2}
-                      src={Dislike}
-                      width={24}
-                      height={22}
-                      alt="dislike"
-                      className={style["dislike-icon"]}
-                    />
-                  </div>
-                )}
-              </div>
-              <h2 className={style["hero-description"]}>{heroe.description}</h2>
+        <div className={style["hero-details"]}>
+          <Image
+            src={`${heroe.thumbnail.path}.${heroe.thumbnail.extension}`}
+            alt={heroe.name}
+            width={300}
+            height={300}
+            priority={true}
+            className={style["hero-image"]}
+          />
+          <div className={style["hero-info"]}>
+            <div className={style["hero-name"]}>
+              <h1 className={style["hero-text"]}>{heroe.name}</h1>
+              {isFavorite ? (
+                <div
+                  className={style["icon-style"]}
+                  onClick={handleFavoriteClick}
+                >
+                  <Image
+                    key={1}
+                    src={Like}
+                    width={24}
+                    height={22}
+                    alt="like"
+                    className={style["like-icon"]}
+                  />
+                </div>
+              ) : (
+                <div
+                  className={style["icon-style"]}
+                  onClick={handleFavoriteClick}
+                >
+                  <Image
+                    key={2}
+                    src={Dislike}
+                    width={24}
+                    height={22}
+                    alt="dislike"
+                    className={style["dislike-icon"]}
+                  />
+                </div>
+              )}
             </div>
+            <h2 className={style["hero-description"]}>{heroe.description}</h2>
           </div>
-        ) : (
-          <Loading />
-        )}
+        </div>
       </div>
       <div className={style["comic-text"]}>COMICS</div>
       <div ref={comicContainerRef} className={style["comic-container"]}>

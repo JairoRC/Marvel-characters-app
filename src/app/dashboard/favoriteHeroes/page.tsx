@@ -6,23 +6,21 @@ import { SearchBar } from "@/components/SearchBar/SearchBar";
 import style from "./FavoriteHeroes.module.css";
 
 export default function FavoritesHeroesPage() {
-  const favorites = useHeroes()?.favorites ?? undefined;
+  const heroesContext = useHeroes();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredHeroes, setFilteredHeroes] = useState<SimpleHeroe[]>([]);
 
   useEffect(() => {
-    if (favorites) {
-      if (searchTerm === "") {
-        setFilteredHeroes(favorites);
-      } else {
-        setFilteredHeroes(
-          favorites.filter((heroe) =>
-            heroe.name.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        );
-      }
+    if (searchTerm === "") {
+      setFilteredHeroes(heroesContext.favorites);
+    } else {
+      setFilteredHeroes(
+        heroesContext.favorites.filter((heroe) =>
+          heroe.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
     }
-  }, [searchTerm, favorites]);
+  }, [searchTerm, heroesContext.favorites]);
 
   return (
     <div className={style["favorite-page"]}>

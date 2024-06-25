@@ -6,40 +6,43 @@ import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { getHeroes } from "@/services/heroesApi";
 import { Loading } from "@/components";
 import style from "./Heroes.module.css";
+import { useHeroes } from "../../../context/HeroesContext";
 
 export default function HeroesPage() {
-  const [heroes, setHeroes] = useState<SimpleHeroe[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const heroesContext = useHeroes();
   const [filteredHeroes, setFilteredHeroes] = useState<SimpleHeroe[]>([]);
 
-  useEffect(() => {
-    const fetchHeroes = async () => {
-      try {
-        const fetchedHeroes = await getHeroes();
-        setHeroes(fetchedHeroes);
-        setFilteredHeroes(fetchedHeroes);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching heroes:", error);
-        setIsLoading(false);
-      }
-    };
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
-    fetchHeroes();
+  useEffect(() => {
+    (async () => {
+      if (heroesContext.heroes.length === 0) {
+        try {
+          setIsLoading(true);
+          heroesContext.setHeroes(await getHeroes());
+        } catch (error) {
+          console.error("Error fetching heroes:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+
+      setFilteredHeroes(heroesContext.heroes);
+    })();
   }, []);
 
   useEffect(() => {
     if (searchTerm === "") {
-      setFilteredHeroes(heroes);
+      setFilteredHeroes(heroesContext.heroes);
     } else {
       setFilteredHeroes(
-        heroes.filter((heroe) =>
+        heroesContext.heroes.filter((heroe) =>
           heroe.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
     }
-  }, [searchTerm, heroes]);
+  }, [searchTerm, heroesContext.heroes]);
 
   return (
     <div className={style["heroe-container"]}>

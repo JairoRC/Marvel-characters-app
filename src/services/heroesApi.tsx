@@ -29,41 +29,19 @@ const params = new URLSearchParams({
 
 export const getHeroes = async (): Promise<SimpleHeroe[]> => {
   const url = `${baseURL}/characters?${params}`;
-
   const response = await fetch(url);
+
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
+
   const data: HeroesResponse = await response.json();
 
-  const heroes = data.data.results.map((heroe) => ({
+  return data.data.results.map((heroe) => ({
     id: heroe.id,
     name: heroe.name,
     thumbnail: heroe.thumbnail,
   }));
-
-  return heroes;
-};
-
-export const getHeroeDetails = async (
-  heroId: number
-): Promise<SimpleHeroe[]> => {
-  const url = `${baseURL}/characters/${heroId}?${params}`;
-
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  const data: HeroesResponse = await response.json();
-
-  const heroes = data.data.results.map((heroe) => ({
-    id: heroe.id,
-    name: heroe.name,
-    thumbnail: heroe.thumbnail,
-    description: heroe.description,
-  }));
-
-  return heroes;
 };
 
 export const getComicDetails = async (

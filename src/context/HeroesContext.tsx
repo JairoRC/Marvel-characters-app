@@ -8,9 +8,18 @@ import React, {
   ReactNode,
 } from "react";
 import { SimpleHeroe } from "../heroes/interfaces/simple-heroe";
+import { keyBy } from "lodash";
+
+interface HeroesById {
+  [key: number]: SimpleHeroe;
+}
 
 interface HeroesContextType {
+  heroes: SimpleHeroe[];
+  heroesById: HeroesById;
   favorites: SimpleHeroe[];
+  favoritesIds: number[];
+  setHeroes: (heroes: SimpleHeroe[]) => void;
   addFavorite: (heroe: SimpleHeroe) => void;
   removeFavorite: (heroeId: number) => void;
   favoritesCount: number;
@@ -33,43 +42,46 @@ interface HeroesProviderProps {
 }
 
 export const HeroesProvider = ({ children }: HeroesProviderProps) => {
+  const [favoritesIds, setFavoritesIds] = useState<number[]>([]);
+  const [heroes, _setHeroes] = useState<SimpleHeroe[]>([]);
+  const [heroesById, setHeroesById] = useState<HeroesById>({});
   const [favorites, setFavorites] = useState<SimpleHeroe[]>([]);
 
   useEffect(() => {
-    const savedFavorites = localStorage.getItem("favorites");
-    if (savedFavorites) {
-      try {
-        const parsedFavorites = JSON.parse(savedFavorites);
-        setFavorites(parsedFavorites);
-      } catch (error) {
-        console.error("Failed to parse favorites from localStorage", error);
-      }
-    }
-  }, []);
+    setFavoritesIds(JSON.parse(localStorage.getItem("favorites") ?? '[]') as number[])
+    _setHeroes(JSON.parse(localStorage.getItem("heroes") ?? '[]') as SimpleHeroe[])
+  }, [])
 
   useEffect(() => {
-    if (favorites.length > 0) {
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-    } else {
-      localStorage.removeItem("favorites");
-    }
-  }, [favorites]);
+    setHeroesById(keyBy(heroes, 'id'));
+  }, [heroes]);
+
+  useEffect(() => {
+    setFavorites(favoritesIds.map((id) => heroesById[id]))
+    localStorage.setItem("favorites", JSON.stringify(favoritesIds));
+  }, [favoritesIds]);
+
+  const setHeroes = (heroes: SimpleHeroe[]) => {
+    _setHeroes(heroes);
+
+    localStorage.setItem("heroes", JSON.stringify(heroes));
+  }
 
   const addFavorite = (heroe: SimpleHeroe) => {
-    setFavorites((prevFavorites) => [...prevFavorites, heroe]);
+    if (! favoritesIds.includes(heroe.id)) {
+      setFavoritesIds((prev) => [...prev, heroe.id]);
+    }
   };
 
   const removeFavorite = (heroeId: number) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.filter((heroe) => heroe.id !== heroeId)
-    );
+    setFavoritesIds((prev) => prev.filter((id) => id !== heroeId));
   };
 
-  const favoritesCount = favorites.length;
+  const favoritesCount = favoritesIds.length;
 
   return (
     <HeroesContext.Provider
-      value={{ favorites, addFavorite, removeFavorite, favoritesCount }}
+      value={{ heroes, heroesById, setHeroes, favorites, favoritesIds, addFavorite, removeFavorite, favoritesCount }}
     >
       {children}
     </HeroesContext.Provider>

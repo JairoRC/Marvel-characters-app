@@ -17,11 +17,8 @@ interface Props {
 export const HeroeCard = ({ heroe }: Props) => {
   const { id, name, thumbnail } = heroe;
   const finalName = _.split(name, "(", 1)[0].trim();
-  const { favorites, addFavorite, removeFavorite } = useHeroes();
-
-  const isFavorite = favorites.some(
-    (favHeroe: { id: number }) => favHeroe.id === id
-  );
+  const { favoritesIds, addFavorite, removeFavorite } = useHeroes();
+  const isFavorite = favoritesIds.includes(id)
 
   const handleFavoriteClick = () => {
     if (isFavorite) {
